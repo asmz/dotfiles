@@ -3,8 +3,12 @@ function str_with_color() {
 }
 
 function my_git_status() {
-    [ $(current_branch) ] && echo "($(str_with_color red $(current_branch)))"
+    [ $(current_branch) ] && echo "$(git_prompt_info)"
 }
+ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}) "
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}!"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
 
 CURRENT_DIRECTORY=$(str_with_color cyan '%~')
 HOSTNAME=$(str_with_color yellow '%m')
