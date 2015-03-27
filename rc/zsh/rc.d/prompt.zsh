@@ -1,9 +1,14 @@
-#PROMPT='%{[$[31+$RANDOM % 6]m%}%B%U%m'"{%n}%#%{[m%}%u%b "
-#RPROMPT='%{[$[31+$RANDOM % 6]m%}%B[%(?.%h.ERROR:%?)] %D{%m/%d %R} [%3c]%{[m%}%b'
-
-function my_git_status() {
-    [ $(current_branch) ] && echo "($(current_branch)$(git_prompt_status))"
+function str_with_color() {
+    echo "%{$fg[$1]%}$2%{$reset_color%}"
 }
 
-PROMPT='%F{blue}[%~]%f $(my_git_status)
-%(?.$.%F{red}$%f) '
+function my_git_status() {
+    [ $(current_branch) ] && echo "$(git_prompt_info)"
+}
+
+CURRENT_DIRECTORY=$(str_with_color blue '%~')
+HOSTNAME=$(str_with_color green '%m')
+PROMPT_CHAR_OK='$ '
+PROMPT_CHAR_NG=$(str_with_color red ${PROMPT_CHAR_OK})
+PROMPT='[${CURRENT_DIRECTORY}@${HOSTNAME}] $(my_git_status)
+%(?.${PROMPT_CHAR_OK}.${PROMPT_CHAR_NG})'
