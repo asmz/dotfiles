@@ -21,4 +21,4 @@ make update
 
 ## Thanks
 
-@bto ( https://bitbucket.org/btomasato/dotfiles )
+@bto ( https://github.com/bto/dotfiles )
