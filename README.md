@@ -26,6 +26,7 @@ make update
 * git
 * curl
 * vim
+* tmux
 
 ## Thanks
 
