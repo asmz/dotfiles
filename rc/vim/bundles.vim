@@ -6,18 +6,16 @@ NeoBundle 'Shougo/unite.vim'
 " 大文字小文字を区別しない
 let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
-
 " key bindings
-nnoremap ,ug :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-nnoremap ,ub :<C-u>Unite buffer<CR>
-nnoremap ,uf :<C-u>Unite file<CR>
-nnoremap ,um :<C-u>Unite file_mru<CR>
-nnoremap ,ur :<C-u>call <SID>unite_project('-start-insert')<CR>
-function! s:unite_project(...)
-  let opts = (a:0 ? join(a:000, ' ') : '')
-  let dir = unite#util#path2project_directory(expand('%'))
-  execute 'Unite' opts 'file_rec:' . dir
-endfunction
+nnoremap <silent> ,ug :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+nnoremap <silent> ,uf :<C-u>Unite file<CR>
+nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+if (isdirectory(getcwd().'/.git'))
+  nnoremap <silent> ,ur :<C-u>Unite file_rec/git<CR>
+else
+  nnoremap <silent> ,ur :<C-u>Unite file_rec/async<CR>
+endif
 " unite grep に ag(The Silver Searcher) を使う
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
