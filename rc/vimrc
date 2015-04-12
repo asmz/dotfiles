@@ -15,6 +15,7 @@ filetype plugin indent off
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc', {
         \ 'build' : {
         \     'windows' : 'make -f make_mingw32.mak',
