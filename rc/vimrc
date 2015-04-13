@@ -1,3 +1,5 @@
+set runtimepath+=~/.vim/
+
 " Neobundle settings
 " --
 set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -5,16 +7,12 @@ filetype plugin indent off
 
 call neobundle#begin(expand('~/.vim/bundle/'))
   NeoBundleFetch 'Shougo/neobundle.vim'
-  source ~/.vim/bundles.vim
+  runtime! bundle.d/*.vim
 call neobundle#end()
 
 filetype plugin indent on
 NeoBundleCheck
 
-" config
+" include config
 " --
-source ~/.vim/config.vim
-
-" view settings
-" --
-source ~/.vim/view.vim
+runtime! config.d/*.vim
