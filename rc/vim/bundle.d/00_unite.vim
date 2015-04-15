@@ -14,11 +14,7 @@ nnoremap <silent> ,ug :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 nnoremap <silent> ,uf :<C-u>Unite file<CR>
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-if (isdirectory(getcwd().'/.git'))
-  nnoremap <silent> ,ur :<C-u>Unite file_rec/git<CR>
-else
-  nnoremap <silent> ,ur :<C-u>Unite file_rec/async<CR>
-endif
+nnoremap <silent> ,ur :<C-u>Unite file_rec/async<CR>
 
 " unite grep に ag(The Silver Searcher) を使う
 if executable('ag')
