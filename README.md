@@ -10,7 +10,7 @@ The repository is a long journey.
 git clone git@github.com:asmz/dotfiles.git dotfiles
 cd dotfiles
 make
-chsh -s /bin/zsh
+chsh -s $(which zsh)
 ```
 
 ### update
