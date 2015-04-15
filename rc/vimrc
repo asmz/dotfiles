@@ -1,5 +1,3 @@
-set runtimepath+=~/.vim/
-
 " Neobundle settings
 " --
 set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -15,4 +13,5 @@ NeoBundleCheck
 
 " include config
 " --
+set runtimepath+=~/.vim/
 runtime! config.d/*.vim
