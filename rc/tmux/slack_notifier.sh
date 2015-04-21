@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# slack notifier on shell (all channel)
+# slack notifier on shell (specified channel)
 # @asmz
 #
 # Usage
-#  ./slack_notifier_all.sh
+#  ./slack_notifier.sh [channel_name]
 #
 # Configuration
 #  Required SLACK_API_TOKEN environment variable before open tmux.
@@ -24,39 +24,28 @@ API_CHANNELS_INFO="channels.info"
 HTTP_GET="$(which curl) -s -X GET"
 JQ="$(which jq) -r"
 
-ps=`pgrep -fo $0`
-if [[ '' != ${ps} && $$ != ${ps} ]]; then
+if [[ -z $1 || -z ${SLACK_API_TOKEN} ]]; then
     exit 1
 fi
 
-if [[ -z ${SLACK_API_TOKEN} ]]; then
+channel_name=$1
+
+# Get channel id by channel name
+channel_id=`${HTTP_GET} "${API_URL_BASE}${API_CHANNELS_LIST}?token=${SLACK_API_TOKEN}&exclude_archived=1" | ${JQ} '.channels[] | select(.name == "'${channel_name}'") | .id'`
+if [[ -z ${channel_id} ]]; then
     exit 1
 fi
 
-# Get all channel you are a member
-channel_list=`${HTTP_GET} "${API_URL_BASE}${API_CHANNELS_LIST}?token=${SLACK_API_TOKEN}&exclude_archived=1" | ${JQ} '.channels[] | select(.is_member == true) | "\(.name),\(.id)"'`
-if [[ -z ${channel_list} ]]; then
-    exit 1
-fi
-
-unread_label=""
-for channel in ${channel_list}
-do
-    channel_name=`echo ${channel} | cut -d "," -f 1`
-    channel_id=`echo ${channel} | cut -d "," -f 2`
-
-    # Get unread count by channel id
-    unread_count=`${HTTP_GET} "${API_URL_BASE}${API_CHANNELS_INFO}?token=${SLACK_API_TOKEN}&channel=${channel_id}" | ${JQ} '.channel.unread_count_display'`
-
-    sleep 1
-
-    if [[ ${unread_count} = 0 ]]; then
-        continue
-    fi
-    unread_label="${unread_label} ${channel_name}:${unread_count}"
-done
+# Get unread count by channel id
+unread_count=`${HTTP_GET} "${API_URL_BASE}${API_CHANNELS_INFO}?token=${SLACK_API_TOKEN}&channel=${channel_id}" | ${JQ} '.channel.unread_count_display'`
 
 # Set label
+unread_label=""
+if [[ ${unread_count} != 0 ]]; then
+    unread_label="[${channel_name}:${unread_count}]"
+fi
+
 echo ${unread_label}
 
 exit 0
+
