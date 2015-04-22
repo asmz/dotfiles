@@ -24,6 +24,12 @@ API_CHANNELS_INFO="channels.info"
 HTTP_GET="$(which curl) -s -X GET"
 JQ="$(which jq) -r"
 
+# Check duplicate process
+ps=`pgrep -fo "$0 $@"`
+if [[ '' != ${ps} && $$ != ${ps} ]]; then
+    exit 1
+fi
+
 if [[ -z $1 || -z ${SLACK_API_TOKEN} ]]; then
     exit 1
 fi
@@ -31,17 +37,19 @@ fi
 channel_name=$1
 
 # Get channel id by channel name
-channel_id=`${HTTP_GET} "${API_URL_BASE}${API_CHANNELS_LIST}?token=${SLACK_API_TOKEN}&exclude_archived=1" | ${JQ} '.channels[] | select(.name == "'${channel_name}'") | .id'`
+channel_id=`${HTTP_GET} "${API_URL_BASE}${API_CHANNELS_LIST}?token=${SLACK_API_TOKEN}&exclude_archived=1" \\
+            | ${JQ} '.channels[] | select(.name == "'${channel_name}'") | .id'`
 if [[ -z ${channel_id} ]]; then
     exit 1
 fi
 
 # Get unread count by channel id
-unread_count=`${HTTP_GET} "${API_URL_BASE}${API_CHANNELS_INFO}?token=${SLACK_API_TOKEN}&channel=${channel_id}" | ${JQ} '.channel.unread_count_display'`
+unread_count=`${HTTP_GET} "${API_URL_BASE}${API_CHANNELS_INFO}?token=${SLACK_API_TOKEN}&channel=${channel_id}" \\
+              | ${JQ} '.channel.unread_count_display'`
 
 # Set label
 unread_label=""
-if [[ ${unread_count} != 0 ]]; then
+if [[ ! -z ${unread_count} && ${unread_count} -gt 0 ]]; then
     unread_label="[${channel_name}:${unread_count}]"
 fi
 
