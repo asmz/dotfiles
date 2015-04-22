@@ -21,7 +21,7 @@
 API_URL_BASE="https://slack.com/api/"
 API_CHANNELS_LIST="channels.list"
 API_CHANNELS_INFO="channels.info"
-HTTP_GET="$(which curl) -s -X GET"
+HTTP_GET="$(which curl) -s -G"
 JQ="$(which jq) -r"
 
 # Check duplicate process
