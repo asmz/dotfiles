@@ -21,10 +21,11 @@
 API_URL_BASE="https://slack.com/api/"
 API_CHANNELS_LIST="channels.list"
 API_CHANNELS_INFO="channels.info"
-HTTP_GET="$(which curl) -s -X GET"
+HTTP_GET="$(which curl) -s -G"
 JQ="$(which jq) -r"
 
-ps=`pgrep -fo $0`
+# Check duplicate process
+ps=`pgrep -fo "$0"`
 if [[ '' != ${ps} && $$ != ${ps} ]]; then
     exit 1
 fi
