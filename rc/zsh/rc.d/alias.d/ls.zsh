@@ -5,3 +5,4 @@ else
 fi
 
 alias lla='ls -la';
+alias lltr='ls -ltr';
