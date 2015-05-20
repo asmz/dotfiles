@@ -2,6 +2,7 @@
 " --
 syntax on
 colorscheme desert
+set syntax=htmldjango
 
 " brackets match
 " --

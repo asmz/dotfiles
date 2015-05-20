@@ -1,2 +1,2 @@
 " vim-twig : twigのシンタックスハイライト
-NeoBundle 'lunaru/vim-twig'
+NeoBundle 'evidens/vim-twig'
