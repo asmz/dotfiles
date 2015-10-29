@@ -16,3 +16,5 @@
 	ad = add
 	ci = commit -a
 	co = checkout
+[core]
+	editor = /usr/bin/vim
