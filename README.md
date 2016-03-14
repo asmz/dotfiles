@@ -1,13 +1,13 @@
 # dotfiles
 
-The repository is a long journey.
+The dotfiles is a long journey.
 
 ## Usage
 
 ### install
 
 ```
-git clone git@github.com:asmz/dotfiles.git dotfiles
+git clone git@github.com:asmz/dotfiles.git
 cd dotfiles
 make
 chsh -s $(which zsh)
