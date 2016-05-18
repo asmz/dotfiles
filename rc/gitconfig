@@ -16,5 +16,6 @@
 	ad = add
 	ci = commit -a
 	co = checkout
+        nw = log --decorate --graph --name-status --oneline
 [core]
 	editor = /usr/bin/vim
