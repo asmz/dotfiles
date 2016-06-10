@@ -17,5 +17,6 @@
 	ci = commit -a
 	co = checkout
         nw = log --decorate --graph --name-status --oneline
+        precommit = diff --cached --diff-algorithm=minimal -w
 [core]
 	editor = /usr/bin/vim
