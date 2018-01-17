@@ -10,6 +10,7 @@ The dotfiles is a long journey.
 git clone git@github.com:asmz/dotfiles.git
 cd dotfiles
 make
+echo $(which zsh) | sudo tee -a /etc/shells
 chsh -s $(which zsh)
 ```
 
